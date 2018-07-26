@@ -71,6 +71,92 @@ public class Main {
 
 # 三. 扩展
 
+> 把 M 个同样的苹果放在 N 个同样的盘子里，允许有的盘子空着不放，问共有多少种不同的分法？注意：5、1、1 和 1、5、1 是同一种分法，即顺序无关。输入：7 3，输出：8。
+
+> 与硬币问题相似，dp[i][j]表示i个盘子摆放j个苹果，当j>=i时，苹果数量多于盘子个数，分为两种情况，一种是i-1个盘子摆放j个苹果，表明有空盘；另一种是i个盘子，不留空盘，每个盘子放一个苹果，苹果总数从j-i变为j，因此状态转移方程为 dp[i][j]=dp[i-1][j]+dp[i][j-i]。当j<i时，苹果数量少于盘子个数，此时肯定存在空盘，空盘不影响，直接去掉，dp[i][j]=dp[i-1][j]。代码如下：
+
+```C++
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<functional>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <unordered_map>
+#include <exception>
+#include <iomanip>
+#include <memory>
+#include <sstream>
+ 
+using namespace std;
+ 
+int main(int argc, char** argv)
+{
+    int n,m;
+    while (cin >> m >> n)
+    {
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1,0));
+        dp[0][0] = 1;
+        for (int i = 1; i <= n; ++i)
+        {
+            for (int j = 0; j <= m; ++j)
+            {
+                if (j >= i) dp[i][j] = dp[i - 1][j] + dp[i][j - i];
+                else dp[i][j] = dp[i - 1][j];
+            }
+        }
+ 
+        cout << dp[n][m] << endl;
+    }
+ 
+    return 0;
+}
+```
+
+> 可进一步对代码进行空间优化，dp改为一维数组，代码如下：
+
+```C++
+
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<functional>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <unordered_map>
+#include <exception>
+#include <iomanip>
+#include <memory>
+#include <sstream>
+ 
+using namespace std;
+ 
+int main(int argc, char** argv)
+{
+    int n,m;
+    while (cin >> m >> n)
+    {
+        vector<int> dp(m + 1,0);
+        dp[0] = 1;
+        for (int i = 1; i <= n; ++i)
+        {
+            for (int j = i; j <= m; ++j)
+            {
+                dp[j] = dp[j] + dp[j - i];
+            }
+        }
+ 
+        cout << dp[m] << endl;
+    }
+ 
+    return 0;
+}```
+
+
 > 假设有 1 元，3 元，5 元的硬币若干（无限），现在需要凑出 11 元，问如何组合才能使硬币的数量最少？
 
 > dp[j]表示凑够j元所需要的最少硬币数，显然dp[0]=0，dp[1]=1，dp[2]=min(dp[2-2]+1,dp[2-1]+1)=1，这里以dp[2]为例，做个简单的分析，如果需要2块钱，那么可以将这个问题分解成更小的子问题来求解，即可以在dp[1]的基础上在拿1个硬币就可以凑到2块钱，或者是在dp[2-2]的基础上再拿一个2元的硬币即可达到要求，很容易得到状态转移方程为dp[j]=min(dp[j-coins[i]]+1)。代码如下：
