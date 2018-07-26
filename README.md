@@ -68,3 +68,33 @@ public class Main {
     }
 }
 ```
+
+# 三. 扩展
+
+> 假设有 1 元，3 元，5 元的硬币若干（无限），现在需要凑出 11 元，问如何组合才能使硬币的数量最少？
+
+> dp[j]表示凑够j元所需要的最少硬币数，显然dp[0]=0，dp[1]=1，dp[2]=min(dp[2-2]+1,dp[2-1]+1)=1，这里以dp[2]为例，做个简单的分析，如果需要2块钱，那么可以将这个问题分解成更小的子问题来求解，即可以在dp[1]的基础上在拿1个硬币就可以凑到2块钱，或者是在dp[2-2]的基础上再拿一个2元的硬币即可达到要求，很容易得到状态转移方程为dp[j]=min(dp[j-coins[i]]+1)。代码如下：
+
+```python
+def coin_element(n,coins):
+
+    dp=[0]*(n+1)
+
+    for i in range(1,n+1):
+        dp[i]=i
+        for j in coins:
+            dp[i]=min(dp[i],dp[i-j])+1
+    return dp[n]
+
+
+if __name__ == '__main__':
+    n=11
+    coins=[1,3,5]
+    res=coin_element(n,coins)
+    print(res)
+
+```
+
+
+
+
