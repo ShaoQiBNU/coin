@@ -285,7 +285,7 @@ void init(int size) {
   c[0][0] = 1;
   for (int i = 1; i != size; i++) {
     c[i][0] = 1;
-    for (int j = 1; j != size; j++){
+    for (int j = 1; j != i+1; j++){
       // 杨辉三角规则：当前值是上一行的两个肩上的值之和
       c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % mod;
     }
