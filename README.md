@@ -273,7 +273,58 @@ if __name__ == '__main__':
 
 杨辉三角与组合之间的关系如图所示：
 
+![image](https://github.com/ShaoQiBNU/coin/blob/master/1.png)
 
+从上图可见，杨辉三角保存着所有组合数。所以，只要把部分杨辉三角保存起来，求解组合直接查表。对应的C[m][n]就是<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}" title="C_{n}^{m}" /></a>。
+
+代码如下：
+
+```C++
+#include <bits/stdc++.h>
+using namespace std;
+long long c[101][101]; // 保存杨辉三角
+const int mod = 1000000007;
+
+void init(int size) {
+  c[0][0] = 1;
+  for (int i = 1; i != size; i++) {
+    c[i][0] = 1;
+    for (int j = 1; j != size; j++){
+      // 杨辉三角规则：当前值是上一行的两个肩上的值之和
+      c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % mod;
+    }
+  }
+}
+int main() {
+    // 构建杨辉三角
+    init(101);
+    // 获取输入参数
+    int k = 0;// 歌单总长度
+    scanf("%d",&k);
+    int a = 0; // 第一种歌曲长度
+    int x = 0; // 第一种歌曲数量
+    int b = 0; // 第二种歌曲长度
+    int y = 0; // 第二种歌曲数量
+    scanf("%d%d%d%d",&a,&x,&b,&y);
+    
+    int res=0;
+    // 遍历第一种歌曲数量可选用的数目0~x
+    for (int i = 0; i <= x; i++) {
+        int sum_a = i*a; // 第一种歌曲长度和
+        int sum_b = k-i*a; // 第二种歌曲长度和
+        if (sum_a <= k // 选取的第一种歌曲长度和不超过歌单总长度
+            && sum_b%b == 0 // 除去第一种歌曲长度和，剩余长度必须是第二种歌曲长度的整数倍
+            && sum_b/b <= y // 第二种歌曲数目不能超过歌曲总数
+           ){
+           // 组成歌单数目
+           int count = (c[x][i] * c[y][sum_b/b]) % mod;
+           res = (res + count) % mod; // 因为可能不止一种方式，多种方式数目累加。
+        }
+    }
+    printf("%d\n", res);
+  return 0;
+}
+```
 
 
 # 四. 辨析
