@@ -269,15 +269,11 @@ if __name__ == '__main__':
 9
 ```
 
-> 将两种长度的歌的数量进行遍历，如果满足总长度为K，计算该数量的组合<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}" title="C_{n}^{m}" /></a>下共有多少种不同歌曲的组合方式，所以本题的关键是实现组合函数：<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}=\frac{n!}{m!*(n-m)!}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}=\frac{n!}{m!*(n-m)!}" title="C_{n}^{m}=\frac{n!}{m!*(n-m)!}" /></a> 。一般来说，时间复杂度是阶乘级O(n!)的函数是不可用的，这里需要用到杨辉三角，组合的递推公式为：<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}=C_{n-1}^{m}&space;&plus;&space;C_{n-1}^{m-1}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}=C_{n-1}^{m}&space;&plus;&space;C_{n-1}^{m-1}" title="C_{n}^{m}=C_{n-1}^{m} + C_{n-1}^{m-1}" /></a>
-
-杨辉三角与组合之间的关系如图所示：
+> 将两种长度的歌的数量进行遍历，如果满足总长度为K，计算该数量的组合<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}" title="C_{n}^{m}" /></a>下共有多少种不同歌曲的组合方式，所以本题的关键是实现组合函数：<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}=\frac{n!}{m!*(n-m)!}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}=\frac{n!}{m!*(n-m)!}" title="C_{n}^{m}=\frac{n!}{m!*(n-m)!}" /></a> 。一般来说，时间复杂度是阶乘级O(n!)的函数是不可用的，这里需要用到杨辉三角，组合的递推公式为：<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}=C_{n-1}^{m}&space;&plus;&space;C_{n-1}^{m-1}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}=C_{n-1}^{m}&space;&plus;&space;C_{n-1}^{m-1}" title="C_{n}^{m}=C_{n-1}^{m} + C_{n-1}^{m-1}" /></a>。杨辉三角与组合之间的关系如图所示：
 
 ![image](https://github.com/ShaoQiBNU/coin/blob/master/1.png)
 
-从上图可见，杨辉三角保存着所有组合数。所以，只要把部分杨辉三角保存起来，求解组合直接查表。对应的C[m][n]就是<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}" title="C_{n}^{m}" /></a>。
-
-代码如下：
+> 从上图可见，杨辉三角保存着所有组合数。所以，只要把部分杨辉三角保存起来，求解组合直接查表。对应的C[m][n]就是<a href="https://www.codecogs.com/eqnedit.php?latex=C_{n}^{m}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?C_{n}^{m}" title="C_{n}^{m}" /></a>。 代码如下：
 
 ```C++
 #include <bits/stdc++.h>
